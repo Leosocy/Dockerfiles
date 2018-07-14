@@ -1,4 +1,0 @@
-FROM jjanzic/docker-python3-opencv:opencv-3.4.1
-
-COPY lcov /usr/bin
-COPY genhtml /usr/bin

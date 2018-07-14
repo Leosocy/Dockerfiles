@@ -1,0 +1,9 @@
+################
+# build for ci #
+################
+
+FROM registry.cn-hangzhou.aliyuncs.com/leosocy/opencv:python-3.6
+
+COPY lcov /usr/bin
+COPY genhtml /usr/bin
+COPY geninfo /usr/bin

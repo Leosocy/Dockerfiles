@@ -1,0 +1,52 @@
+##########################################################
+# only [core imgcodecs imgproc] libs of opencv installed #
+##########################################################
+
+FROM frolvlad/alpine-gxx
+
+MAINTAINER leosocy@gmail.com
+
+# base dev packages
+RUN apk add --no-cache bash make cmake linux-headers
+
+# args
+ARG OPENCV_VER
+
+# install opencv
+RUN apk add --no-cache wget \
+    && cd /tmp \
+    && wget https://github.com/opencv/opencv/archive/$OPENCV_VER.zip \
+    && unzip $OPENCV_VER.zip && cd opencv* && mkdir build && cd build \
+    && cmake ..  -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/ \
+        -DBUILD_DOCS=off \
+        -DBUILD_EXAMPLES=off \ 
+        -DBUILD_opencv_apps=off \
+        -DBUILD_opencv_highgui=off \
+        -DBUILD_opencv_calib3d=off \
+        -DBUILD_opencv_contrib=off \
+        -DBUILD_opencv_features2d=off \
+        -DBUILD_opencv_flann=off \
+        -DBUILD_opencv_gpu=off \
+        -DBUILD_opencv_java_bindings_generator=off \
+        -DBUILD_opencv_legacy=off \
+        -DBUILD_opencv_ml=off \
+        -DBUILD_opencv_dnn=off \
+        -DBUILD_opencv_nonfree=off \
+        -DBUILD_opencv_objdetect=off \
+        -DBUILD_opencv_ocl=off \
+        -DBUILD_opencv_photo=off \
+        -DBUILD_opencv_python_bindings_generator=off \
+        -DBUILD_opencv_stitching=off \
+        -DBUILD_opencv_superres=off \
+        -DBUILD_opencv_ts=off \
+        -DBUILD_opencv_video=off \
+        -DBUILD_opencv_videoio=off \
+        -DBUILD_opencv_videostab=off \
+        -DBUILD_opencv_world=off \
+    && make -j4 && make install \
+    && cd / && rm -rf /tmp/* \
+    && apk del wget
+
+RUN echo "export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64" > ~/.bashrc
+
+CMD bash

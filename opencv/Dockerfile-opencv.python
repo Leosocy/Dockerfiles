@@ -1,0 +1,8 @@
+################
+# build for ci #
+################
+
+FROM registry.cn-hangzhou.aliyuncs.com/leosocy/opencv:base-3.4.2
+
+RUN apk add --no-cache python3 \
+    && cd /usr/bin && ln -s python3 python
