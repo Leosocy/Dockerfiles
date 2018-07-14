@@ -4,6 +4,8 @@
 
 FROM registry.cn-hangzhou.aliyuncs.com/leosocy/opencv:python-3.6
 
+RUN apk add --no-cache perl curl
+
 COPY lcov /usr/bin
 COPY genhtml /usr/bin
 COPY geninfo /usr/bin

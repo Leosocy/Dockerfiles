@@ -17,7 +17,8 @@ RUN apk add --no-cache wget \
     && cd /tmp \
     && wget https://github.com/opencv/opencv/archive/$OPENCV_VER.zip \
     && unzip $OPENCV_VER.zip && cd opencv* && mkdir build && cd build \
-    && cmake ..  -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/ \
+    && cmake ..  -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr/local/ -DCMAKE_INSTALL_LIBDIR=lib \
         -DBUILD_DOCS=off \
         -DBUILD_EXAMPLES=off \ 
         -DBUILD_opencv_apps=off \
@@ -46,7 +47,5 @@ RUN apk add --no-cache wget \
     && make -j4 && make install \
     && cd / && rm -rf /tmp/* \
     && apk del wget
-
-RUN echo "export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64" > ~/.bashrc
 
 CMD bash
