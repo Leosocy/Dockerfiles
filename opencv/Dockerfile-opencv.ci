@@ -4,7 +4,13 @@
 
 FROM registry.cn-hangzhou.aliyuncs.com/leosocy/opencv:python-3.6
 
-RUN apk add --no-cache perl curl git
+RUN apk add --no-cache perl curl git make cmake \
+    && cd /tmp \
+    && git clone https://github.com/jbeder/yaml-cpp.git && cd yaml-cpp \
+    && mkdir build && cd build && cmake -DYAML_CPP_BUILD_TESTS=OFF -DYAML_CPP_BUILD_TOOLS=OFF -DBUILD_SHARED_LIBS=ON .. \
+    && make -j2 && make install \
+    && cd / && rm -rf /temp/*
+        
 
 COPY lcov /usr/bin
 COPY genhtml /usr/bin
