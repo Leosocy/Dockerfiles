@@ -2,7 +2,7 @@
 # build for ci #
 ################
 
-FROM registry.cn-hangzhou.aliyuncs.com/leosocy/opencv:python-3.6
+FROM leosocy/opencv:python
 
 RUN apk add --no-cache perl curl git make cmake bash \
     && cd /tmp \
